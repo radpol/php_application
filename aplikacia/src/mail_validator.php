@@ -1,40 +1,46 @@
-<html>
-<head></head>
-<body>
+
 	<?php
-	session_start();
-	$_SESSION["mail"] = $_POST["policko"];
-	$mail = $_SESSION["mail"];
-	echo "Zadali ste tuto adresu: ",$mail ,'<br>';
-	$nasielSom1Zavinac = false;
-	$nasielSomBodku = false;
-	$jeNiecoZaBodkou = false;
-	for ($i = 0; $i < StrLen($mail); $i++) {
-		if ($mail[$i] == '@' && $i>0) {
-			if (!$nasielSom1Zavinac){
-			$nasielSom1Zavinac = true;
-			} else {
-				$nasielSom1Zavinac = false;
-			}
-		}
-		if ($nasielSom1Zavinac && $mail[$i] == '.') {
-			$nasielSomBodku = true;
-		}
-		if ($nasielSom1Zavinac && $nasielSomBodku && $mail[$i] != '.') {
-			$jeNiecoZaBodkou = true;
-		}
+	
+class Validation
+{
+	public function validEmailAdress($mail)
+	{
+		return true;
 	}
-	if ($nasielSom1Zavinac && $nasielSomBodku && $jeNiecoZaBodkou) {
-		echo "Zadali ste spravnu mailovu adresu";
-	}else {
-		echo "Zadali ste nespravnu mailovu adresu";
-	}
-	echo '<br>';
+}	
+// 	session_start();
+// 	if(isset($_POST["policko"]) && $_POST["policko"] !='')
+// 	{	
+// 		$_SESSION["mail"] = $_POST["policko"];
+// 	}
+// 	$mail = $_SESSION["mail"];
+// 	echo "Zadali ste tuto adresu: ",$mail ,'<br>';
+// 	$nasielSom1Zavinac = false;
+// 	$nasielSomBodku = false;
+// 	$jeNiecoZaBodkou = false;
+// 	for ($i = 0; $i < StrLen($mail); $i++) {
+// 		if ($mail[$i] == '@' && $i>0) {
+// 			if (!$nasielSom1Zavinac){
+// 			$nasielSom1Zavinac = true;
+// 			} else {
+// 				$nasielSom1Zavinac = false;
+// 			}
+// 		}
+// 		if ($nasielSom1Zavinac && $mail[$i] == '.') {
+// 			$nasielSomBodku = true;
+// 		}
+// 		if ($nasielSom1Zavinac && $nasielSomBodku && $mail[$i] != '.') {
+// 			$jeNiecoZaBodkou = true;
+// 		}
+// 	}
+// 	if ($nasielSom1Zavinac && $nasielSomBodku && $jeNiecoZaBodkou) {
+// 		echo "Zadali ste spravnu mailovu adresu";
+// 	}else {
+// 		echo "Zadali ste nespravnu mailovu adresu";
+// 	}
+// 	echo '<br>';
 
 	?>
-	<a href="index.html">Navrat</a>
-</body>
-</html>
 
 
 
