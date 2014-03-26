@@ -3,38 +3,50 @@ class HtmlTabulka {
 	
 	private $pocetRiadkov;
 	private $pocetStlpcov;
+	private $hrubkaRamu;
 	
-	private final $TABULKA_ZAC = "<table>";
-	private final $TABULKA_KON = "</table>";
-	private final $RIADOK_ZAC = "<tr>";
-	private final $RIADOK_KON = "</tr>";
-	private final $BUNKA_ZAC = "<td>";
-	private final $BUNKA_KON = "</td>";
+	private  $TAG_TABULKA = "table";
+	private  $TAG_RIADOK = "tr";
+	private  $TAG_BUNKA = "td";
+	private  $ATTRIBUT_OKRAJ = "border";
+	
+	private function vytvorTag($menoTagu, $atributTagu, $jeKoncovy){
+		$result = '<';
+		if ($jeKoncovy) {
+			$result .= '/';
+		}
+		$result .= $menoTagu . $atributTagu . '>';
+		return  $result;
+		
+	}
+	
+	
 	
 	private function vytvorBunku($obsahBunky) {
-		return $this->BUNKA_ZAC + $obsahBunky + $this->BUNKA_KON;
+		return $this->vytvorTag($this->TAG_BUNKA, '', false) . $obsahBunky . $this->vytvorTag($this->TAG_BUNKA, '', false);
 	}
 
 	private function vytvorTabulku($obsah) {
-		$vysledok = $this->TABULKA_ZAC;
+		$vysledok = $this->vytvorTag($this->TAG_TABULKA," " . $this->ATTRIBUT_OKRAJ."=".$this->hrubkaRamu, false);
 		for ($i = 0; $i < $this->pocetRiadkov; $i++) {
 			$riadok = "";
 			for ($j = 0; $j < $this->pocetStlpcov; $j++) {
-				$riadok += $this->vytvorBunku("*"); 
+				$riadok .= $this->vytvorBunku("*"); 
 			}
-			$vysledok += $this->vytvorRiadok($riadok);
+			$vysledok .= $this->vytvorRiadok($riadok);
 		}
-		$vysledok += $this->BUNKA_KON;
+		$vysledok .= $this->vytvorTag($this->TAG_TABULKA, "", true);
 		return $vysledok;
 	}
 	
 	private function vytvorRiadok($riadok) {
-		return $this->RIADOK_ZAC + $riadok + $this->RIADOK_KON;
+		return $this->vytvorTag($this->TAG_RIADOK, "", false) . $riadok . $this->vytvorTag($this->TAG_RIADOK, "", true);
 	}
 	
-	public function nastavParametre($pocetRiadkov, $pocetStlpcov) {
+	public function nastavParametre($pocetRiadkov, $pocetStlpcov, $hrubkaRamu) {
 		$this->pocetRiadkov = $pocetRiadkov;
 		$this->pocetStlpcov = $pocetStlpcov;
+		$this->hrubkaRamu = $hrubkaRamu;
 	}
 	
 	public function vykresli() {
